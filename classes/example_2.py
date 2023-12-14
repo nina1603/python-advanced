@@ -1,4 +1,4 @@
-from classes_first_hometask_2 import Advert_2 as Advert
+from classes.classes_first_hometask_2 import Advert_2 as Advert
 
 if __name__ == '__main__':
     ad = {

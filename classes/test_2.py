@@ -1,4 +1,4 @@
-from classes_first_hometask_2 import Advert_2 as Advert
+from classes.classes_first_hometask_2 import Advert_2 as Advert
 
 def test_1():
     json_ad = {

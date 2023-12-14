@@ -1,7 +1,7 @@
 import pytest
 import json
 
-from classes_first_hometask_1 import Advert
+from classes.classes_first_hometask_1 import Advert
 
 def test_1():
     json_ad = {

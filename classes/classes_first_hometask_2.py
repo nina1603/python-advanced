@@ -1,4 +1,4 @@
-from classes_first_hometask_1 import Advert
+from classes.classes_first_hometask_1 import Advert
 
 
 class ColorizeMixin:
