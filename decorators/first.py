@@ -14,7 +14,7 @@ def my_write(string_text):
     add_current_time = datetime.datetime.now(pytz.timezone('Europe/Moscow'))\
         .strftime('[%Y-%m-%d %H:%M:%S]: ')
     string = f"{add_current_time}{string_text}\n"
-    original_write(string)
+    return original_write(string)
 
 
 if __name__ == "__main__":

@@ -11,6 +11,7 @@ def redirect_output(filepath):
             sys.stdout = open(filepath, 'w')
             function(*args, **kwargs)
             sys.stdout = original_stdout
+            sys.stdout.close()
         return wrapper
     return decorator
 
