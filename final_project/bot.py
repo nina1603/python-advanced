@@ -100,24 +100,34 @@ async def game(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     for (c, r) in cells_for_zeros:
         if (
                 ((c + 1) % 3, (r + 1) % 3) not in cells_for_zeros and ((c + 2) % 3, (r + 2) % 3) not in cells_for_zeros
-                and cur_state[(c + 1) % 3][(r + 1) % 3] == CROSS
-                and cur_state[(c + 2) % 3][(r + 2) % 3] == CROSS and c == r
-        ):
-            row, column = (c, r)
-        elif (
-                ((c - 1) % 3, (r + 1) % 3) not in cells_for_zeros and ((c - 2) % 3, (r + 2) % 3) not in cells_for_zeros
-                and cur_state[(c - 1) % 3][(r + 1) % 3] == CROSS
-                and cur_state[(c - 2) % 3][(r + 2) % 3] == CROSS and c + r == 2
-        ):
-            row, column = (c, r)
-        elif (
+                and cur_state[(c + 1) % 3][(r + 1) % 3] == ZERO and cur_state[(c + 2) % 3][(r + 2) % 3] == ZERO
+                and c == r
+        ) or (
+            ((c - 1) % 3, (r + 1) % 3) not in cells_for_zeros and ((c - 2) % 3, (r + 2) % 3) not in cells_for_zeros
+            and cur_state[(c - 1) % 3][(r + 1) % 3] == ZERO and cur_state[(c - 2) % 3][(r + 2) % 3] == ZERO
+            and c + r == 2
+        ) or (
                 (c, (r + 1) % 3) not in cells_for_zeros and (c, (r + 2) % 3) not in cells_for_zeros and
-                cur_state[c][(r+1) % 3] == CROSS and cur_state[c][(r+2) % 3] == CROSS
+                cur_state[c][(r+1) % 3] == ZERO and cur_state[c][(r+2) % 3] == ZERO
+        ) or (
+                ((c + 1) % 3, r) not in cells_for_zeros and ((c + 2) % 3, r) not in cells_for_zeros and
+                cur_state[(c + 1) % 3][r] == ZERO and cur_state[(c + 2) % 3][r] == ZERO
         ):
             row, column = (c, r)
         elif (
-                ((c + 1) % 3, r) not in cells_for_zeros and ((c + 2) % 3, r) not in cells_for_zeros and
-                cur_state[(c + 1) % 3][r] == CROSS and cur_state[(c + 2) % 3][r] == CROSS
+            ((c + 1) % 3, (r + 1) % 3) not in cells_for_zeros and ((c + 2) % 3, (r + 2) % 3) not in cells_for_zeros
+            and cur_state[(c + 1) % 3][(r + 1) % 3] == CROSS and cur_state[(c + 2) % 3][(r + 2) % 3] == CROSS
+            and c == r
+        ) or (
+            ((c - 1) % 3, (r + 1) % 3) not in cells_for_zeros and ((c - 2) % 3, (r + 2) % 3) not in cells_for_zeros
+            and cur_state[(c - 1) % 3][(r + 1) % 3] == CROSS and cur_state[(c - 2) % 3][(r + 2) % 3] == CROSS
+            and c + r == 2
+        ) or (
+            (c, (r + 1) % 3) not in cells_for_zeros and (c, (r + 2) % 3) not in cells_for_zeros and
+            cur_state[c][(r+1) % 3] == CROSS and cur_state[c][(r+2) % 3] == CROSS
+        ) or (
+            ((c + 1) % 3, r) not in cells_for_zeros and ((c + 2) % 3, r) not in cells_for_zeros and
+            cur_state[(c + 1) % 3][r] == CROSS and cur_state[(c + 2) % 3][r] == CROSS
         ):
             row, column = (c, r)
     if column == -1:
