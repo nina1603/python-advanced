@@ -95,10 +95,15 @@ async def game(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     column, row = -1, -1
     # write a simple algorithm for choosing a place for zero:
-    # if is sees a potential won row or column for crosses (doesn't consider diagonals)
+    # if is sees a potential won row or column or diagonal for crosses
     # it will put zero into this column or row to stop you from easy win
     for (c, r) in cells_for_zeros:
         if (
+                ((c + 1) % 3, (r + 1) % 3) not in cells_for_zeros and ((c + 2) % 3, (r + 2) % 3) not in cells_for_zeros and
+                cur_state[(c + 1) % 3][(r + 1) % 3] == CROSS and cur_state[(c + 2) % 3][(r + 2) % 3] == CROSS
+        ):
+            row, column = (c, r)
+        elif (
                 (c, (r + 1) % 3) not in cells_for_zeros and (c, (r + 2) % 3) not in cells_for_zeros and
                 cur_state[c][(r+1) % 3] == CROSS and cur_state[c][(r+2) % 3] == CROSS
         ):
