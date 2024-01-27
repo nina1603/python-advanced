@@ -12,7 +12,7 @@ from telegram.ext import (
 )
 import os
 
-# os.environ['TG_TOKEN'] = my_secret_token
+# os.environ['TG_TOKEN'] = ...
 
 # Enable logging
 logging.basicConfig(
@@ -99,28 +99,26 @@ async def game(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     # it will put zero into this column or row to stop you from easy win
     for (c, r) in cells_for_zeros:
         if (
-                ((c + 1) % 3, (r + 1) % 3) not in cells_for_zeros and ((c + 2) % 3, (r + 2) % 3) not in cells_for_zeros and
-                cur_state[(c + 1) % 3][(r + 1) % 3] == CROSS and cur_state[(c + 2) % 3][(r + 2) % 3] == CROSS
+                ((c + 1) % 3, (r + 1) % 3) not in cells_for_zeros and ((c + 2) % 3, (r + 2) % 3) not in cells_for_zeros
+                and cur_state[(c + 1) % 3][(r + 1) % 3] == CROSS
+                and cur_state[(c + 2) % 3][(r + 2) % 3] == CROSS and c == r
         ):
-            logger.info(f"Diagonal!")
             row, column = (c, r)
         elif (
-                ((c - 1) % 3, (r + 1) % 3) not in cells_for_zeros and ((c - 2) % 3, (r + 2) % 3) not in cells_for_zeros and
-                cur_state[(c - 1) % 3][(r + 1) % 3] == CROSS and cur_state[(c - 2) % 3][(r + 2) % 3] == CROSS
+                ((c - 1) % 3, (r + 1) % 3) not in cells_for_zeros and ((c - 2) % 3, (r + 2) % 3) not in cells_for_zeros
+                and cur_state[(c - 1) % 3][(r + 1) % 3] == CROSS
+                and cur_state[(c - 2) % 3][(r + 2) % 3] == CROSS and c + r == 2
         ):
-            logger.info(f"Diagonal!")
             row, column = (c, r)
         elif (
                 (c, (r + 1) % 3) not in cells_for_zeros and (c, (r + 2) % 3) not in cells_for_zeros and
                 cur_state[c][(r+1) % 3] == CROSS and cur_state[c][(r+2) % 3] == CROSS
         ):
-            logger.info(f"Column!")
             row, column = (c, r)
         elif (
                 ((c + 1) % 3, r) not in cells_for_zeros and ((c + 2) % 3, r) not in cells_for_zeros and
                 cur_state[(c + 1) % 3][r] == CROSS and cur_state[(c + 2) % 3][r] == CROSS
         ):
-            logger.info(f"Row!")
             row, column = (c, r)
     if column == -1:
         row, column = random.choice(cells_for_zeros)
