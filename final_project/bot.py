@@ -76,7 +76,7 @@ async def game(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     cur_state = context.user_data["keyboard_state"]
     new_game_msg = "Чтобы начать заново, введите /start"
 
-    # logger.info(update.callback_query.data) # outputs string cr, where c is column and r is row
+    # update.callback_query.data - it's a string "cr", where c is column and r is row
 
     row, column = map(int, update.callback_query.data)
     if cur_state[row][column] is not FREE_SPACE:
@@ -102,21 +102,29 @@ async def game(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                 ((c + 1) % 3, (r + 1) % 3) not in cells_for_zeros and ((c + 2) % 3, (r + 2) % 3) not in cells_for_zeros and
                 cur_state[(c + 1) % 3][(r + 1) % 3] == CROSS and cur_state[(c + 2) % 3][(r + 2) % 3] == CROSS
         ):
+            logger.info(f"Diagonal!")
+            row, column = (c, r)
+        elif (
+                ((c - 1) % 3, (r + 1) % 3) not in cells_for_zeros and ((c - 2) % 3, (r + 2) % 3) not in cells_for_zeros and
+                cur_state[(c - 1) % 3][(r + 1) % 3] == CROSS and cur_state[(c - 2) % 3][(r + 2) % 3] == CROSS
+        ):
+            logger.info(f"Diagonal!")
             row, column = (c, r)
         elif (
                 (c, (r + 1) % 3) not in cells_for_zeros and (c, (r + 2) % 3) not in cells_for_zeros and
                 cur_state[c][(r+1) % 3] == CROSS and cur_state[c][(r+2) % 3] == CROSS
         ):
+            logger.info(f"Column!")
             row, column = (c, r)
         elif (
                 ((c + 1) % 3, r) not in cells_for_zeros and ((c + 2) % 3, r) not in cells_for_zeros and
                 cur_state[(c + 1) % 3][r] == CROSS and cur_state[(c + 2) % 3][r] == CROSS
         ):
+            logger.info(f"Row!")
             row, column = (c, r)
     if column == -1:
         row, column = random.choice(cells_for_zeros)
 
-    # logger.info(f"Chosen position: {column}, {row}")
     cur_state[row][column] = ZERO
     if won(cur_state):
         await change_message(update, context, f"Проигрыш! :( {new_game_msg}")
